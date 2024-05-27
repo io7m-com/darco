@@ -37,11 +37,11 @@ import java.util.stream.Collectors;
 
 public final class EPQDatabaseFactory
   extends DPQDatabaseFactory<
-    EPQDatabaseConfiguration,
-    EPQDatabaseConnectionType,
-    EPQDatabaseTransactionType,
-    EPQDatabaseQueryProviderType,
-    EPQDatabaseType>
+  EPQDatabaseConfiguration,
+  EPQDatabaseConnectionType,
+  EPQDatabaseTransactionType,
+  EPQDatabaseQueryProviderType<?, ?, ?>,
+  EPQDatabaseType>
   implements EPQDatabaseFactoryType
 {
   private static final Logger LOG =
@@ -72,7 +72,7 @@ public final class EPQDatabaseFactory
   protected EPQDatabaseType onCreateDatabase(
     final EPQDatabaseConfiguration configuration,
     final DataSource source,
-    final List<EPQDatabaseQueryProviderType> queryProviders,
+    final List<EPQDatabaseQueryProviderType<?, ?, ?>> queryProviders,
     final CloseableCollectionType<DDatabaseException> resources)
   {
     return new EPQDatabase(
@@ -121,11 +121,12 @@ public final class EPQDatabaseFactory
   }
 
   @Override
-  protected List<EPQDatabaseQueryProviderType> onRequireDatabaseQueryProviders()
+  protected List<EPQDatabaseQueryProviderType<?, ?, ?>> onRequireDatabaseQueryProviders()
   {
     return ServiceLoader.load(EPQDatabaseQueryProviderType.class)
       .stream()
       .map(ServiceLoader.Provider::get)
+      .map(x -> (EPQDatabaseQueryProviderType<?, ?, ?>) x)
       .collect(Collectors.toList());
   }
 }

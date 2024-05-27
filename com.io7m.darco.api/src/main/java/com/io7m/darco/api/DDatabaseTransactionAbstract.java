@@ -44,7 +44,7 @@ public abstract class DDatabaseTransactionAbstract<
   C extends DDatabaseConfigurationType,
   N extends DDatabaseConnectionType<T>,
   T extends DDatabaseTransactionType,
-  Q extends DDatabaseQueryProviderType<T>>
+  Q extends DDatabaseQueryProviderType<T, ?, ?, ?>>
   implements DDatabaseTransactionType
 {
   private final DDatabaseTransactionCloseBehavior closeBehavior;

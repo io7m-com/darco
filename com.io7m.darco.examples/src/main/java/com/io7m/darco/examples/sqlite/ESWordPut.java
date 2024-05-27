@@ -38,9 +38,14 @@ public final class ESWordPut
    * @return The query provider
    */
 
-  public static ESDatabaseQueryProviderType provider()
+  public static ESDatabaseQueryProviderType<
+    String, DDatabaseUnit, ESWordPutType>
+  provider()
   {
-    return ESDatabaseQueryProvider.provide(ESWordPutType.class, ESWordPut::new);
+    return ESDatabaseQueryProvider.provide(
+      ESWordPutType.class,
+      ESWordPut::new
+    );
   }
 
   @Override

@@ -28,7 +28,7 @@ final class EPQDatabaseTransaction
   EPQDatabaseConfiguration,
   EPQDatabaseConnectionType,
   EPQDatabaseTransactionType,
-  EPQDatabaseQueryProviderType>
+  EPQDatabaseQueryProviderType<?, ?, ?>>
   implements EPQDatabaseTransactionType
 {
   EPQDatabaseTransaction(
@@ -36,7 +36,7 @@ final class EPQDatabaseTransaction
     final EPQDatabaseConfiguration inConfiguration,
     final EPQDatabaseConnectionType inConnection,
     final Span inTransactionScope,
-    final Map<Class<?>, EPQDatabaseQueryProviderType> queries)
+    final Map<Class<?>, EPQDatabaseQueryProviderType<?, ?, ?>> queries)
   {
     super(
       closeBehavior,

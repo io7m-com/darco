@@ -22,21 +22,23 @@ import com.io7m.darco.api.DDatabaseQueryType;
 
 import java.util.function.Function;
 
-final class ESDatabaseQueryProvider
-  extends DDatabaseQueryProviderAbstract<ESDatabaseTransactionType>
-  implements ESDatabaseQueryProviderType
+final class ESDatabaseQueryProvider<P, R, Q extends DDatabaseQueryType<P, R>>
+  extends DDatabaseQueryProviderAbstract<ESDatabaseTransactionType, P, R, Q>
+  implements ESDatabaseQueryProviderType<P, R, Q>
 {
   private ESDatabaseQueryProvider(
-    final Class<?> inQueryClass,
-    final Function<ESDatabaseTransactionType, DDatabaseQueryType<?, ?>> inConstructor)
+    final Class<? extends Q> inQueryClass,
+    final Function<ESDatabaseTransactionType, DDatabaseQueryType<P, R>> inConstructor)
   {
     super(inQueryClass, inConstructor);
   }
 
-  static ESDatabaseQueryProviderType provide(
-    final Class<?> inQueryClass,
-    final Function<ESDatabaseTransactionType, DDatabaseQueryType<?, ?>> inConstructor)
+  static <P, R, Q extends DDatabaseQueryType<P, R>>
+  ESDatabaseQueryProviderType<P, R, Q>
+  provide(
+    final Class<? extends Q> inQueryClass,
+    final Function<ESDatabaseTransactionType, DDatabaseQueryType<P, R>> inConstructor)
   {
-    return new ESDatabaseQueryProvider(inQueryClass, inConstructor);
+    return new ESDatabaseQueryProvider<>(inQueryClass, inConstructor);
   }
 }

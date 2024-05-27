@@ -30,30 +30,19 @@ import java.util.Map;
 
 final class ESDatabase
   extends DDatabaseAbstract<
-    ESDatabaseConfiguration,
-    ESDatabaseConnectionType,
-    ESDatabaseTransactionType,
-    ESDatabaseQueryProviderType>
+  ESDatabaseConfiguration,
+  ESDatabaseConnectionType,
+  ESDatabaseTransactionType,
+  ESDatabaseQueryProviderType<?, ?, ?>>
   implements ESDatabaseType
 {
   ESDatabase(
     final ESDatabaseConfiguration inConfiguration,
     final SQLiteDataSource inDataSource,
-    final Collection<ESDatabaseQueryProviderType> queryProviders,
+    final Collection<ESDatabaseQueryProviderType<?, ?, ?>> queryProviders,
     final CloseableCollectionType<DDatabaseException> resources)
   {
     super(inConfiguration, inDataSource, queryProviders, resources);
-  }
-
-  @Override
-  protected ESDatabaseConnectionType createConnection(
-    final Span span,
-    final Connection connection,
-    final Map<Class<?>, ESDatabaseQueryProviderType> queries)
-    throws DDatabaseException
-  {
-    setWALMode(connection);
-    return new ESDatabaseConnection(this, span, connection, queries);
   }
 
   private static void setWALMode(
@@ -65,5 +54,16 @@ final class ESDatabase
     } catch (final SQLException e) {
       throw DDatabaseException.ofException(e);
     }
+  }
+
+  @Override
+  protected ESDatabaseConnectionType createConnection(
+    final Span span,
+    final Connection connection,
+    final Map<Class<?>, ESDatabaseQueryProviderType<?, ?, ?>> queries)
+    throws DDatabaseException
+  {
+    setWALMode(connection);
+    return new ESDatabaseConnection(this, span, connection, queries);
   }
 }

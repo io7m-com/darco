@@ -36,7 +36,7 @@ import java.util.Objects;
 public abstract class DDatabaseConnectionAbstract<
   C extends DDatabaseConfigurationType,
   T extends DDatabaseTransactionType,
-  Q extends DDatabaseQueryProviderType<T>>
+  Q extends DDatabaseQueryProviderType<T, ?, ?, ?>>
   implements DDatabaseConnectionType<T>
 {
   private final Connection connection;

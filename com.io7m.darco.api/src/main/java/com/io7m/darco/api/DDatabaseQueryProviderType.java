@@ -21,15 +21,22 @@ package com.io7m.darco.api;
  * The type of database query providers.
  *
  * @param <T> The type of database transactions
+ * @param <P> The type of query parameters
+ * @param <R> The type of query results
+ * @param <Q> The precise type of query
  */
 
-public interface DDatabaseQueryProviderType<T extends DDatabaseTransactionType>
+public interface DDatabaseQueryProviderType<
+  T extends DDatabaseTransactionType,
+  P,
+  R,
+  Q extends DDatabaseQueryType<P, R>>
 {
   /**
    * @return The class that will be used to fetch this query provider
    */
 
-  Class<?> queryClass();
+  Class<? extends Q> queryClass();
 
   /**
    * Create a query for the given transaction.
@@ -39,5 +46,5 @@ public interface DDatabaseQueryProviderType<T extends DDatabaseTransactionType>
    * @return A new query
    */
 
-  DDatabaseQueryType<?, ?> create(T transaction);
+  DDatabaseQueryType<P, R> create(T transaction);
 }

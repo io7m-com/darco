@@ -18,13 +18,18 @@
 package com.io7m.darco.examples.postgresql;
 
 import com.io7m.darco.api.DDatabaseQueryProviderType;
+import com.io7m.darco.api.DDatabaseQueryType;
 
 /**
  * The type of example PostgreSQL database query providers.
+ *
+ * @param <P> The type of query parameters
+ * @param <R> The type of query results
+ * @param <Q> The precise type of query
  */
 
-public interface EPQDatabaseQueryProviderType
-  extends DDatabaseQueryProviderType<EPQDatabaseTransactionType>
+public interface EPQDatabaseQueryProviderType<P, R, Q extends DDatabaseQueryType<P, R>>
+  extends DDatabaseQueryProviderType<EPQDatabaseTransactionType, P, R, Q>
 {
 
 }

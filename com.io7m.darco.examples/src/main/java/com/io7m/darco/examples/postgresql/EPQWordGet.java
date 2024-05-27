@@ -40,9 +40,14 @@ public final class EPQWordGet
    * @return The query provider
    */
 
-  public static EPQDatabaseQueryProviderType provider()
+  public static EPQDatabaseQueryProviderType<
+    DDatabaseUnit, Optional<String>, ESWordGetType>
+  provider()
   {
-    return EPQDatabaseQueryProvider.provide(ESWordGetType.class, EPQWordGet::new);
+    return EPQDatabaseQueryProvider.provide(
+      ESWordGetType.class,
+      EPQWordGet::new
+    );
   }
 
   @Override
@@ -53,7 +58,8 @@ public final class EPQWordGet
   {
     final var c = transaction.connection();
 
-    try (var s = c.prepareStatement("SELECT * FROM words ORDER BY RANDOM() LIMIT 1")) {
+    try (var s = c.prepareStatement(
+      "SELECT * FROM words ORDER BY RANDOM() LIMIT 1")) {
       try (var r = s.executeQuery()) {
         if (r.next()) {
           return Optional.of(r.getString(1));

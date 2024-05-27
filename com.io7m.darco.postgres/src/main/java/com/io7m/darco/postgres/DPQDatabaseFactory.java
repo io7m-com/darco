@@ -69,7 +69,7 @@ public abstract class DPQDatabaseFactory<
   C extends DPQDatabaseConfigurationType,
   N extends DDatabaseConnectionType<T>,
   T extends DDatabaseTransactionType,
-  Q extends DDatabaseQueryProviderType<T>,
+  Q extends DDatabaseQueryProviderType<T, ?, ?, ?>,
   D extends DDatabaseType<C, N, T, Q>>
   implements DDatabaseFactoryType<C, N, T, Q, D>
 {

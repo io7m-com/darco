@@ -28,7 +28,7 @@ final class ESDatabaseTransaction
   ESDatabaseConfiguration,
   ESDatabaseConnectionType,
   ESDatabaseTransactionType,
-  ESDatabaseQueryProviderType>
+  ESDatabaseQueryProviderType<?, ?, ?>>
   implements ESDatabaseTransactionType
 {
   ESDatabaseTransaction(
@@ -36,7 +36,7 @@ final class ESDatabaseTransaction
     final ESDatabaseConfiguration inConfiguration,
     final ESDatabaseConnectionType inConnection,
     final Span inTransactionScope,
-    final Map<Class<?>, ESDatabaseQueryProviderType> queries)
+    final Map<Class<?>, ESDatabaseQueryProviderType<?, ?, ?>> queries)
   {
     super(
       closeBehavior,

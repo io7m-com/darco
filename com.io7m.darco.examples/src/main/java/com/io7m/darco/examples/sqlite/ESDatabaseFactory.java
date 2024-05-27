@@ -40,7 +40,7 @@ public final class ESDatabaseFactory
   ESDatabaseConfiguration,
   ESDatabaseConnectionType,
   ESDatabaseTransactionType,
-  ESDatabaseQueryProviderType,
+  ESDatabaseQueryProviderType<?, ?, ?>,
   ESDatabaseType>
   implements ESDatabaseFactoryType
 {
@@ -72,7 +72,7 @@ public final class ESDatabaseFactory
   protected ESDatabaseType onCreateDatabase(
     final ESDatabaseConfiguration configuration,
     final SQLiteDataSource source,
-    final List<ESDatabaseQueryProviderType> queryProviders,
+    final List<ESDatabaseQueryProviderType<?, ?, ?>> queryProviders,
     final CloseableCollectionType<DDatabaseException> resources)
   {
     return new ESDatabase(
@@ -106,11 +106,12 @@ public final class ESDatabaseFactory
   }
 
   @Override
-  protected List<ESDatabaseQueryProviderType> onRequireDatabaseQueryProviders()
+  protected List<ESDatabaseQueryProviderType<?, ?, ?>> onRequireDatabaseQueryProviders()
   {
     return ServiceLoader.load(ESDatabaseQueryProviderType.class)
       .stream()
       .map(ServiceLoader.Provider::get)
+      .map(x -> (ESDatabaseQueryProviderType<?, ?, ?>) x)
       .collect(Collectors.toList());
   }
 }

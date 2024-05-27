@@ -39,9 +39,14 @@ public final class ESWordGet
    * @return The query provider
    */
 
-  public static ESDatabaseQueryProviderType provider()
+  public static ESDatabaseQueryProviderType<
+    DDatabaseUnit, Optional<String>, ESWordGetType>
+  provider()
   {
-    return ESDatabaseQueryProvider.provide(ESWordGetType.class, ESWordGet::new);
+    return ESDatabaseQueryProvider.provide(
+      ESWordGetType.class,
+      ESWordGet::new
+    );
   }
 
   @Override
@@ -52,7 +57,8 @@ public final class ESWordGet
   {
     final var c = transaction.connection();
 
-    try (var s = c.prepareStatement("SELECT * FROM words ORDER BY RANDOM() LIMIT 1")) {
+    try (var s = c.prepareStatement(
+      "SELECT * FROM words ORDER BY RANDOM() LIMIT 1")) {
       try (var r = s.executeQuery()) {
         if (r.next()) {
           return Optional.of(r.getString(1));

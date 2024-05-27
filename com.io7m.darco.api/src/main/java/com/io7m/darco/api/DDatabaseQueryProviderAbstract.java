@@ -24,17 +24,24 @@ import java.util.function.Function;
  * A convenient abstract query provider.
  *
  * @param <T> The precise type of database transactions
+ * @param <P> The type of query parameters
+ * @param <R> The type of query results
+ * @param <Q> The precise type of query
  */
 
-public abstract class DDatabaseQueryProviderAbstract<T extends DDatabaseTransactionType>
-  implements DDatabaseQueryProviderType<T>
+public abstract class DDatabaseQueryProviderAbstract<
+  T extends DDatabaseTransactionType,
+  P,
+  R,
+  Q extends DDatabaseQueryType<P, R>>
+  implements DDatabaseQueryProviderType<T, P, R, Q>
 {
-  private final Class<?> queryClass;
-  private final Function<T, DDatabaseQueryType<?, ?>> constructor;
+  private final Class<? extends Q> queryClass;
+  private final Function<T, DDatabaseQueryType<P, R>> constructor;
 
   protected DDatabaseQueryProviderAbstract(
-    final Class<?> inQueryClass,
-    final Function<T, DDatabaseQueryType<?, ?>> inConstructor)
+    final Class<? extends Q> inQueryClass,
+    final Function<T, DDatabaseQueryType<P, R>> inConstructor)
   {
     this.queryClass =
       Objects.requireNonNull(inQueryClass, "queryClass");
@@ -43,13 +50,13 @@ public abstract class DDatabaseQueryProviderAbstract<T extends DDatabaseTransact
   }
 
   @Override
-  public final Class<?> queryClass()
+  public final Class<? extends Q> queryClass()
   {
     return this.queryClass;
   }
 
   @Override
-  public final DDatabaseQueryType<?, ?> create(
+  public final DDatabaseQueryType<P, R> create(
     final T transaction)
   {
     return this.constructor.apply(transaction);

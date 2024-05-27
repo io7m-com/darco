@@ -26,16 +26,16 @@ import java.util.Map;
 
 final class ESDatabaseConnection
   extends DDatabaseConnectionAbstract<
-    ESDatabaseConfiguration,
-    ESDatabaseTransactionType,
-    ESDatabaseQueryProviderType>
+  ESDatabaseConfiguration,
+  ESDatabaseTransactionType,
+  ESDatabaseQueryProviderType<?, ?, ?>>
   implements ESDatabaseConnectionType
 {
   ESDatabaseConnection(
     final ESDatabase database,
     final Span span,
     final Connection connection,
-    final Map<Class<?>, ESDatabaseQueryProviderType> queries)
+    final Map<Class<?>, ESDatabaseQueryProviderType<?, ?, ?>> queries)
   {
     super(database.configuration(), span, connection, queries);
   }
@@ -44,7 +44,7 @@ final class ESDatabaseConnection
   protected ESDatabaseTransactionType createTransaction(
     final DDatabaseTransactionCloseBehavior closeBehavior,
     final Span transactionSpan,
-    final Map<Class<?>, ESDatabaseQueryProviderType> queries)
+    final Map<Class<?>, ESDatabaseQueryProviderType<?, ?, ?>> queries)
   {
     return new ESDatabaseTransaction(
       closeBehavior,

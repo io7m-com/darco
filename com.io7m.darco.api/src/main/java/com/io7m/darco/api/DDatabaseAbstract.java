@@ -43,7 +43,7 @@ public abstract class DDatabaseAbstract<
   C extends DDatabaseConfigurationType,
   N extends DDatabaseConnectionType<T>,
   T extends DDatabaseTransactionType,
-  Q extends DDatabaseQueryProviderType<T>>
+  Q extends DDatabaseQueryProviderType<T, ?, ?, ?>>
   implements DDatabaseType<C, N, T, Q>
 {
   private final C configuration;
@@ -69,7 +69,7 @@ public abstract class DDatabaseAbstract<
 
   private static <
     T extends DDatabaseTransactionType,
-    Q extends DDatabaseQueryProviderType<T>>
+    Q extends DDatabaseQueryProviderType<T, ?, ?, ?>>
   Map<Class<?>, Q> collectQueryProviders(
     final Collection<Q> inQueryProviders)
   {

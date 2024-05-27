@@ -28,7 +28,7 @@ public interface ESDatabaseFactoryType
   ESDatabaseConfiguration,
   ESDatabaseConnectionType,
   ESDatabaseTransactionType,
-  ESDatabaseQueryProviderType,
+  ESDatabaseQueryProviderType<?, ?, ?>,
   ESDatabaseType>
 {
 

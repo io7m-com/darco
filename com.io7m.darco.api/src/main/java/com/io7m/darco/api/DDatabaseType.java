@@ -30,7 +30,7 @@ public interface DDatabaseType<
   C extends DDatabaseConfigurationType,
   N extends DDatabaseConnectionType<T>,
   T extends DDatabaseTransactionType,
-  Q extends DDatabaseQueryProviderType<T>>
+  Q extends DDatabaseQueryProviderType<T, ?, ?, ?>>
   extends AutoCloseable
 {
   /**

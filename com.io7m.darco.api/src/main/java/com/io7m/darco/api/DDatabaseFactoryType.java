@@ -35,7 +35,7 @@ public interface DDatabaseFactoryType<
   C extends DDatabaseConfigurationType,
   N extends DDatabaseConnectionType<T>,
   T extends DDatabaseTransactionType,
-  Q extends DDatabaseQueryProviderType<T>,
+  Q extends DDatabaseQueryProviderType<T, ?, ?, ?>,
   D extends DDatabaseType<C, N, T, Q>>
 {
   /**

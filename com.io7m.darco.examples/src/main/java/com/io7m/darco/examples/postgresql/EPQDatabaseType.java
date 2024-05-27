@@ -28,7 +28,7 @@ public interface EPQDatabaseType
   EPQDatabaseConfiguration,
   EPQDatabaseConnectionType,
   EPQDatabaseTransactionType,
-  EPQDatabaseQueryProviderType>
+  EPQDatabaseQueryProviderType<?, ?, ?>>
 {
 
 }

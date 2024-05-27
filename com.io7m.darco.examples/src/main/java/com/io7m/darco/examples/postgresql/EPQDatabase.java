@@ -32,13 +32,13 @@ final class EPQDatabase
   EPQDatabaseConfiguration,
   EPQDatabaseConnectionType,
   EPQDatabaseTransactionType,
-  EPQDatabaseQueryProviderType>
+  EPQDatabaseQueryProviderType<?, ?, ?>>
   implements EPQDatabaseType
 {
   EPQDatabase(
     final EPQDatabaseConfiguration inConfiguration,
     final DataSource inDataSource,
-    final Collection<EPQDatabaseQueryProviderType> queryProviders,
+    final Collection<EPQDatabaseQueryProviderType<?, ?, ?>> queryProviders,
     final CloseableCollectionType<DDatabaseException> resources)
   {
     super(inConfiguration, inDataSource, queryProviders, resources);
@@ -48,7 +48,7 @@ final class EPQDatabase
   protected EPQDatabaseConnectionType createConnection(
     final Span span,
     final Connection connection,
-    final Map<Class<?>, EPQDatabaseQueryProviderType> queries)
+    final Map<Class<?>, EPQDatabaseQueryProviderType<?, ?, ?>> queries)
   {
     return new EPQDatabaseConnection(this, span, connection, queries);
   }

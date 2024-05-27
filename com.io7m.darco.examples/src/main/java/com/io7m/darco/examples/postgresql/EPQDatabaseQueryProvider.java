@@ -22,21 +22,23 @@ import com.io7m.darco.api.DDatabaseQueryType;
 
 import java.util.function.Function;
 
-final class EPQDatabaseQueryProvider
-  extends DDatabaseQueryProviderAbstract<EPQDatabaseTransactionType>
-  implements EPQDatabaseQueryProviderType
+final class EPQDatabaseQueryProvider<P, R, Q extends DDatabaseQueryType<P, R>>
+  extends DDatabaseQueryProviderAbstract<EPQDatabaseTransactionType, P, R, Q>
+  implements EPQDatabaseQueryProviderType<P, R, Q>
 {
   private EPQDatabaseQueryProvider(
-    final Class<?> inQueryClass,
-    final Function<EPQDatabaseTransactionType, DDatabaseQueryType<?, ?>> inConstructor)
+    final Class<? extends Q> inQueryClass,
+    final Function<EPQDatabaseTransactionType, DDatabaseQueryType<P, R>> inConstructor)
   {
     super(inQueryClass, inConstructor);
   }
 
-  static EPQDatabaseQueryProviderType provide(
-    final Class<?> inQueryClass,
-    final Function<EPQDatabaseTransactionType, DDatabaseQueryType<?, ?>> inConstructor)
+  static <P, R, Q extends DDatabaseQueryType<P, R>>
+  EPQDatabaseQueryProviderType<P, R, Q>
+  provide(
+    final Class<? extends Q> inQueryClass,
+    final Function<EPQDatabaseTransactionType, DDatabaseQueryType<P, R>> inConstructor)
   {
-    return new EPQDatabaseQueryProvider(inQueryClass, inConstructor);
+    return new EPQDatabaseQueryProvider<>(inQueryClass, inConstructor);
   }
 }

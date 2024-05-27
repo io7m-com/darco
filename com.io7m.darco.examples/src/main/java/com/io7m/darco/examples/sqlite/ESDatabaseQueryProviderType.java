@@ -18,13 +18,18 @@
 package com.io7m.darco.examples.sqlite;
 
 import com.io7m.darco.api.DDatabaseQueryProviderType;
+import com.io7m.darco.api.DDatabaseQueryType;
 
 /**
  * The type of example SQLite database query providers.
+ *
+ * @param <P> The type of query parameters
+ * @param <R> The type of query results
+ * @param <Q> The precise type of query
  */
 
-public interface ESDatabaseQueryProviderType
-  extends DDatabaseQueryProviderType<ESDatabaseTransactionType>
+public interface ESDatabaseQueryProviderType<P, R, Q extends DDatabaseQueryType<P, R>>
+  extends DDatabaseQueryProviderType<ESDatabaseTransactionType, P, R, Q>
 {
 
 }

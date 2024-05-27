@@ -39,9 +39,14 @@ public final class EPQWordPut
    * @return The query provider
    */
 
-  public static EPQDatabaseQueryProviderType provider()
+  public static EPQDatabaseQueryProviderType<
+    String, DDatabaseUnit, ESWordPutType>
+  provider()
   {
-    return EPQDatabaseQueryProvider.provide(ESWordPutType.class, EPQWordPut::new);
+    return EPQDatabaseQueryProvider.provide(
+      ESWordPutType.class,
+      EPQWordPut::new
+    );
   }
 
   @Override

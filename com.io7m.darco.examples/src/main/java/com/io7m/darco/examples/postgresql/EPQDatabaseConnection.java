@@ -26,16 +26,16 @@ import java.util.Map;
 
 final class EPQDatabaseConnection
   extends DDatabaseConnectionAbstract<
-    EPQDatabaseConfiguration,
-    EPQDatabaseTransactionType,
-    EPQDatabaseQueryProviderType>
+  EPQDatabaseConfiguration,
+  EPQDatabaseTransactionType,
+  EPQDatabaseQueryProviderType<?, ?, ?>>
   implements EPQDatabaseConnectionType
 {
   EPQDatabaseConnection(
     final EPQDatabaseType database,
     final Span span,
     final Connection connection,
-    final Map<Class<?>, EPQDatabaseQueryProviderType> queries)
+    final Map<Class<?>, EPQDatabaseQueryProviderType<?, ?, ?>> queries)
   {
     super(database.configuration(), span, connection, queries);
   }
@@ -44,7 +44,7 @@ final class EPQDatabaseConnection
   protected EPQDatabaseTransactionType createTransaction(
     final DDatabaseTransactionCloseBehavior closeBehavior,
     final Span transactionSpan,
-    final Map<Class<?>, EPQDatabaseQueryProviderType> queries)
+    final Map<Class<?>, EPQDatabaseQueryProviderType<?, ?, ?>> queries)
   {
     return new EPQDatabaseTransaction(
       closeBehavior,
