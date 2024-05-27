@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>com.io7m.darco</artifactId>
+    <groupId>com.io7m.darco</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>com.io7m.darco.tests</artifactId>
+
+  <packaging>jar</packaging>
+  <name>com.io7m.darco.tests</name>
+  <description>Minimalist, opinionated database access (Test suite)</description>
+  <url>https://www.io7m.com/software/darco</url>
+
+  <properties>
+    <checkstyle.skip>true</checkstyle.skip>
+    <mdep.analyze.skip>true</mdep.analyze.skip>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.darco.api</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.darco.examples</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>com.io7m.darco.sqlite</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.io7m.seltzer</groupId>
+      <artifactId>com.io7m.seltzer.api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.io7m.lanark</groupId>
+      <artifactId>com.io7m.lanark.core</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-commons</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-engine</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.io7m.ervilla</groupId>
+      <artifactId>com.io7m.ervilla.test_extension</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.io7m.ervilla</groupId>
+      <artifactId>com.io7m.ervilla.api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.io7m.ervilla</groupId>
+      <artifactId>com.io7m.ervilla.native_exec</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.io7m.ervilla</groupId>
+      <artifactId>com.io7m.ervilla.postgres</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.io7m.zelador</groupId>
+      <artifactId>com.io7m.zelador.test_extension</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.annotation.bundle</artifactId>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.annotation.versioning</artifactId>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- Generate version strings used in tests. -->
+      <plugin>
+        <groupId>com.io7m.stmp</groupId>
+        <artifactId>string-template-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-version</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>renderTemplate</goal>
+            </goals>
+            <configuration>
+              <template>
+                <name>EPQTestProperties</name>
+                <inputFile>
+                  ${project.basedir}/src/main/string-template/EPQTestProperties.st
+                </inputFile>
+                <outputFile>
+                  ${project.build.directory}/generated-sources/string-template/com/io7m/darco/tests/EPQTestProperties.java
+                </outputFile>
+                <properties>
+                  <POSTGRESQL_VERSION>${containers.postgresql.version}</POSTGRESQL_VERSION>
+                </properties>
+              </template>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-source</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>add-source</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <source>${project.build.directory}/generated-sources/string-template</source>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- Determine test coverage -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+
+</project>
