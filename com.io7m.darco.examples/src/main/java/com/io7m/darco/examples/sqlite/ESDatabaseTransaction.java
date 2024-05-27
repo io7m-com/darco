@@ -18,24 +18,32 @@
 package com.io7m.darco.examples.sqlite;
 
 import com.io7m.darco.api.DDatabaseTransactionAbstract;
+import com.io7m.darco.api.DDatabaseTransactionCloseBehavior;
 import io.opentelemetry.api.trace.Span;
 
 import java.util.Map;
 
 final class ESDatabaseTransaction
   extends DDatabaseTransactionAbstract<
-    ESDatabaseConfiguration,
-    ESDatabaseConnectionType,
-    ESDatabaseTransactionType,
-    ESDatabaseQueryProviderType>
+  ESDatabaseConfiguration,
+  ESDatabaseConnectionType,
+  ESDatabaseTransactionType,
+  ESDatabaseQueryProviderType>
   implements ESDatabaseTransactionType
 {
   ESDatabaseTransaction(
+    final DDatabaseTransactionCloseBehavior closeBehavior,
     final ESDatabaseConfiguration inConfiguration,
     final ESDatabaseConnectionType inConnection,
     final Span inTransactionScope,
     final Map<Class<?>, ESDatabaseQueryProviderType> queries)
   {
-    super(inConfiguration, inConnection, inTransactionScope, queries);
+    super(
+      closeBehavior,
+      inConfiguration,
+      inConnection,
+      inTransactionScope,
+      queries
+    );
   }
 }

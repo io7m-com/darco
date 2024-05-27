@@ -19,6 +19,8 @@ package com.io7m.darco.api;
 
 import java.sql.Connection;
 
+import static com.io7m.darco.api.DDatabaseTransactionCloseBehavior.ON_CLOSE_DO_NOTHING;
+
 /**
  * A database connection.
  *
@@ -46,6 +48,23 @@ public interface DDatabaseConnectionType<T extends DDatabaseTransactionType>
    * @throws DDatabaseException On errors
    */
 
-  T openTransaction()
+  default T openTransaction()
+    throws DDatabaseException
+  {
+    return this.openTransaction(ON_CLOSE_DO_NOTHING);
+  }
+
+  /**
+   * Begin a new transaction.
+   *
+   * @param closeBehavior The close behavior
+   *
+   * @return The transaction
+   *
+   * @throws DDatabaseException On errors
+   */
+
+  T openTransaction(
+    DDatabaseTransactionCloseBehavior closeBehavior)
     throws DDatabaseException;
 }

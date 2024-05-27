@@ -18,6 +18,7 @@
 package com.io7m.darco.examples.sqlite;
 
 import com.io7m.darco.api.DDatabaseConnectionAbstract;
+import com.io7m.darco.api.DDatabaseTransactionCloseBehavior;
 import io.opentelemetry.api.trace.Span;
 
 import java.sql.Connection;
@@ -41,10 +42,12 @@ final class ESDatabaseConnection
 
   @Override
   protected ESDatabaseTransactionType createTransaction(
+    final DDatabaseTransactionCloseBehavior closeBehavior,
     final Span transactionSpan,
     final Map<Class<?>, ESDatabaseQueryProviderType> queries)
   {
     return new ESDatabaseTransaction(
+      closeBehavior,
       this.configuration(),
       this,
       transactionSpan,

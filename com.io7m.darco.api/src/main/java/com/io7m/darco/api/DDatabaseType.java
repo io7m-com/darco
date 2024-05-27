@@ -67,4 +67,34 @@ public interface DDatabaseType<
   N openConnectionWithRole(
     String role)
     throws DDatabaseException;
+
+  /**
+   * Open a database connection using the default role, and create a new
+   * transaction. When the transaction is closed, the connection is also
+   * closed.
+   *
+   * @return A database transaction
+   *
+   * @throws DDatabaseException On errors
+   */
+
+  T openTransaction()
+    throws DDatabaseException;
+
+  /**
+   * Open a database connection using the given role, and create a new
+   * transaction. When the transaction is closed, the connection is also
+   * closed.
+   *
+   * @param role The role
+   *
+   * @return A database transaction
+   *
+   * @throws DDatabaseException On errors
+   */
+
+  T openTransactionWithRole(
+    String role)
+    throws DDatabaseException;
+
 }

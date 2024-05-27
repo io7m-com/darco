@@ -18,6 +18,7 @@
 package com.io7m.darco.examples.postgresql;
 
 import com.io7m.darco.api.DDatabaseConnectionAbstract;
+import com.io7m.darco.api.DDatabaseTransactionCloseBehavior;
 import io.opentelemetry.api.trace.Span;
 
 import java.sql.Connection;
@@ -41,10 +42,12 @@ final class EPQDatabaseConnection
 
   @Override
   protected EPQDatabaseTransactionType createTransaction(
+    final DDatabaseTransactionCloseBehavior closeBehavior,
     final Span transactionSpan,
     final Map<Class<?>, EPQDatabaseQueryProviderType> queries)
   {
     return new EPQDatabaseTransaction(
+      closeBehavior,
       this.configuration(),
       this,
       transactionSpan,

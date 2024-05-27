@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.io7m.darco.api.DDatabaseTransactionCloseBehavior.ON_CLOSE_CLOSE_CONNECTION;
+
 /**
  * An abstract implementation of the database type for databases.
  *
@@ -87,6 +89,25 @@ public abstract class DDatabaseAbstract<
   public final C configuration()
   {
     return this.configuration;
+  }
+
+  @Override
+  public final T openTransaction()
+    throws DDatabaseException
+  {
+    final var connection = this.openConnection();
+    return connection.openTransaction(ON_CLOSE_CLOSE_CONNECTION);
+  }
+
+  @Override
+  public final T openTransactionWithRole(
+    final String role)
+    throws DDatabaseException
+  {
+    Objects.requireNonNull(role, "role");
+
+    final var connection = this.openConnectionWithRole(role);
+    return connection.openTransaction(ON_CLOSE_CLOSE_CONNECTION);
   }
 
   /**

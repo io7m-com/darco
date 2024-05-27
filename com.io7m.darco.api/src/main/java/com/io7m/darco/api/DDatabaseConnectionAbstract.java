@@ -69,6 +69,7 @@ public abstract class DDatabaseConnectionAbstract<
   /**
    * Create a new transaction.
    *
+   * @param closeBehavior The close behavior
    * @param transactionSpan The transaction span
    * @param queries         The query provider map
    *
@@ -76,9 +77,30 @@ public abstract class DDatabaseConnectionAbstract<
    */
 
   protected abstract T createTransaction(
+    DDatabaseTransactionCloseBehavior closeBehavior,
     Span transactionSpan,
     Map<Class<?>, Q> queries
   );
+
+  @Override
+  public final T openTransaction(
+    final DDatabaseTransactionCloseBehavior closeBehavior)
+  {
+    Objects.requireNonNull(closeBehavior, "closeBehavior");
+
+    final var transactionSpan =
+      this.configuration.telemetry()
+        .tracer()
+        .spanBuilder("DatabaseTransaction")
+        .setParent(Context.current().with(this.connectionSpan))
+        .startSpan();
+
+    return this.createTransaction(
+      closeBehavior,
+      transactionSpan,
+      this.queryMap
+    );
+  }
 
   /**
    * @return The configuration used to open this database
@@ -103,18 +125,5 @@ public abstract class DDatabaseConnectionAbstract<
     } finally {
       this.connectionSpan.end();
     }
-  }
-
-  @Override
-  public final T openTransaction()
-  {
-    final var transactionSpan =
-      this.configuration.telemetry()
-        .tracer()
-        .spanBuilder("DatabaseTransaction")
-        .setParent(Context.current().with(this.connectionSpan))
-        .startSpan();
-
-    return this.createTransaction(transactionSpan, this.queryMap);
   }
 }

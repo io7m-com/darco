@@ -47,6 +47,7 @@ public abstract class DDatabaseTransactionAbstract<
   Q extends DDatabaseQueryProviderType<T>>
   implements DDatabaseTransactionType
 {
+  private final DDatabaseTransactionCloseBehavior closeBehavior;
   private final C configuration;
   private final N connection;
   private final Span transactionSpan;
@@ -55,11 +56,14 @@ public abstract class DDatabaseTransactionAbstract<
   private final HashMap<Class<?>, Object> values;
 
   protected DDatabaseTransactionAbstract(
+    final DDatabaseTransactionCloseBehavior inCloseBehavior,
     final C inConfiguration,
     final N inConnection,
     final Span inTransactionScope,
     final Map<Class<?>, Q> inQueries)
   {
+    this.closeBehavior =
+      Objects.requireNonNull(inCloseBehavior, "closeBehavior");
     this.configuration =
       Objects.requireNonNull(inConfiguration, "inConfiguration");
     this.connection =
@@ -138,6 +142,15 @@ public abstract class DDatabaseTransactionAbstract<
       throw e;
     } finally {
       this.transactionSpan.end();
+
+      switch (this.closeBehavior) {
+        case ON_CLOSE_CLOSE_CONNECTION -> {
+          this.connection.close();
+        }
+        case ON_CLOSE_DO_NOTHING -> {
+          // Nothing to do!
+        }
+      }
     }
   }
 
