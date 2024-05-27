@@ -196,4 +196,13 @@ public abstract class DDatabaseTransactionAbstract<
       throw DDatabaseException.ofException(e);
     }
   }
+
+  @Override
+  public final String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Integer.toUnsignedString(this.hashCode(), 16)
+    );
+  }
 }

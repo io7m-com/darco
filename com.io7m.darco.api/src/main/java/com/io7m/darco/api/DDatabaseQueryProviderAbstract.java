@@ -54,4 +54,13 @@ public abstract class DDatabaseQueryProviderAbstract<T extends DDatabaseTransact
   {
     return this.constructor.apply(transaction);
   }
+
+  @Override
+  public final String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Integer.toUnsignedString(this.hashCode(), 16)
+    );
+  }
 }

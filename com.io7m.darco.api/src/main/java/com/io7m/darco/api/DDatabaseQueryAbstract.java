@@ -62,4 +62,12 @@ public abstract class DDatabaseQueryAbstract<
     P parameters)
     throws DDatabaseException, SQLException;
 
+  @Override
+  public final String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Integer.toUnsignedString(this.hashCode(), 16)
+    );
+  }
 }

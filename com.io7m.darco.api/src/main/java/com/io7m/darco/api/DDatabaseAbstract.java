@@ -24,9 +24,9 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static com.io7m.darco.api.DDatabaseTransactionCloseBehavior.ON_CLOSE_CLOSE_CONNECTION;
 
@@ -64,9 +64,37 @@ public abstract class DDatabaseAbstract<
     this.resources =
       Objects.requireNonNull(inResources, "inResources");
     this.queryProviders =
-      inQueryProviders.stream()
-        .map(p -> Map.entry(p.queryClass(), p))
-        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+      collectQueryProviders(inQueryProviders);
+  }
+
+  private static <
+    T extends DDatabaseTransactionType,
+    Q extends DDatabaseQueryProviderType<T>>
+  Map<Class<?>, Q> collectQueryProviders(
+    final Collection<Q> inQueryProviders)
+  {
+    final var qmap = new HashMap<Class<?>, Q>(inQueryProviders.size());
+    for (final var q : inQueryProviders) {
+      final Class<?> qc = q.queryClass();
+      final var existing = qmap.get(qc);
+      if (existing != null) {
+        final var sb = new StringBuilder(128);
+        sb.append("Multiple query providers registered with the same class.");
+        sb.append("\n");
+        sb.append("Query class: ");
+        sb.append(qc.getCanonicalName());
+        sb.append("\n");
+        sb.append("Existing registration: ");
+        sb.append(existing.getClass().getCanonicalName());
+        sb.append("\n");
+        sb.append("Current registration: ");
+        sb.append(q.getClass().getCanonicalName());
+        sb.append("\n");
+        throw new IllegalStateException(sb.toString());
+      }
+      qmap.put(qc, q);
+    }
+    return Map.copyOf(qmap);
   }
 
   @Override
@@ -151,5 +179,14 @@ public abstract class DDatabaseAbstract<
       span.end();
       throw DDatabaseException.ofException(e);
     }
+  }
+
+  @Override
+  public final String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Integer.toUnsignedString(this.hashCode(), 16)
+    );
   }
 }

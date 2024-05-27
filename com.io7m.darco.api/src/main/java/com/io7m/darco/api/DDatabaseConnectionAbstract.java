@@ -126,4 +126,13 @@ public abstract class DDatabaseConnectionAbstract<
       this.connectionSpan.end();
     }
   }
+
+  @Override
+  public final String toString()
+  {
+    return "[%s 0x%s]".formatted(
+      this.getClass().getSimpleName(),
+      Integer.toUnsignedString(this.hashCode(), 16)
+    );
+  }
 }
