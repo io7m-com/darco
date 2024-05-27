@@ -17,11 +17,14 @@
 
 package com.io7m.darco.api;
 
+import com.io7m.jmulticlose.core.CloseableCollection;
+import com.io7m.jmulticlose.core.CloseableCollectionType;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.context.Context;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -48,6 +51,8 @@ public abstract class DDatabaseTransactionAbstract<
   private final N connection;
   private final Span transactionSpan;
   private final Map<Class<?>, Q> queries;
+  private final CloseableCollectionType<DDatabaseException> resources;
+  private final HashMap<Class<?>, Object> values;
 
   protected DDatabaseTransactionAbstract(
     final C inConfiguration,
@@ -63,6 +68,42 @@ public abstract class DDatabaseTransactionAbstract<
       Objects.requireNonNull(inTransactionScope, "inMetricsScope");
     this.queries =
       Objects.requireNonNull(inQueries, "queries");
+    this.resources =
+      CloseableCollection.create(() -> {
+        return new DDatabaseException(
+          "One or more resources could not be closed.",
+          "error-resource-close",
+          Map.of(),
+          Optional.empty()
+        );
+      });
+
+    this.values =
+      new HashMap<>();
+  }
+
+  @Override
+  public final <V> void put(
+    final Class<? extends V> clazz,
+    final V value)
+  {
+    if (value instanceof final AutoCloseable closeable) {
+      this.resources.add(closeable);
+    }
+    this.values.put(clazz, value);
+  }
+
+  @Override
+  public final <V> V get(
+    final Class<V> clazz)
+  {
+    return Optional.ofNullable(this.values.get(clazz))
+      .map(clazz::cast)
+      .orElseThrow(() -> {
+        return new IllegalStateException(
+          "No object registered for class %s".formatted(clazz)
+        );
+      });
   }
 
   @Override

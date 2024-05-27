@@ -85,4 +85,29 @@ public interface DDatabaseTransactionType
 
   Span createSubSpan(
     String name);
+
+  /**
+   * Register an object on the transaction.
+   *
+   * @param clazz The class reference used to retrieve the object
+   * @param value The object
+   * @param <V>   The type of object
+   */
+
+  <V> void put(
+    Class<? extends V> clazz,
+    V value);
+
+  /**
+   * Retrieve an object from the transaction.
+   *
+   * @param clazz The class reference used to retrieve the object
+   * @param <V>   The type of object
+   *
+   * @return The object
+   *
+   * @see #put(Class, Object)
+   */
+
+  <V> V get(Class<V> clazz);
 }
