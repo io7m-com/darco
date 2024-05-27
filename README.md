@@ -54,8 +54,10 @@ All of the listed projects abstracted the database behind a simplified set of
 interfaces to allow for easier unit testing, and to allow for migrating to
 different databases without having to completely rewrite all of the application
 code. This meant that each one of those projects had to implement its own set of
-nearly-identical interfaces and initialization code. In much the same manner
-as the [hibiscus](https://www.io7m.com/software/hibiscus) API attempts to
+nearly-identical interfaces and initialization code boilerplate.
+
+In much the same manner as the
+[hibiscus](https://www.io7m.com/software/hibiscus) API attempts to
 provide a common interface around RPC clients, and the
 [anethum](https://www.io7m.com/software/anethum) API attempts to
 provide a common interface around parsers and serializers,
