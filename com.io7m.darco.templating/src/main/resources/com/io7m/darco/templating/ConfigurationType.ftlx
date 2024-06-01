@@ -1,0 +1,16 @@
+[#ftl output_format="plainText"]
+${copyrightText}
+
+package ${packageName};
+
+import com.io7m.darco.api.DDatabaseConfigurationType;
+
+/**
+ * Configuration parameters for the database.
+ */
+
+public interface ${configurationType}
+  extends DDatabaseConfigurationType
+{
+
+}

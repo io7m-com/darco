@@ -26,6 +26,7 @@
     <module>com.io7m.darco.examples</module>
     <module>com.io7m.darco.postgres</module>
     <module>com.io7m.darco.sqlite</module>
+    <module>com.io7m.darco.templating</module>
     <module>com.io7m.darco.tests</module>
   </modules>
 
@@ -157,6 +158,13 @@
         <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>42.7.3</version>
+      </dependency>
+
+      <!-- Templating. -->
+      <dependency>
+        <groupId>org.freemarker</groupId>
+        <artifactId>freemarker</artifactId>
+        <version>2.3.32</version>
       </dependency>
 
       <!-- OpenTelemetry. -->

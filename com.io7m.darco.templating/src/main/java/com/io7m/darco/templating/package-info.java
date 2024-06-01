@@ -15,31 +15,12 @@
  */
 
 /**
- * Minimalist, opinionated database access (Test suite)
+ * Minimalist, opinionated database access (Templating)
  */
 
-open module com.io7m.darco.tests
-{
-  requires org.junit.jupiter.api;
-  requires org.junit.jupiter.engine;
-  requires org.junit.platform.commons;
-  requires org.junit.platform.engine;
-  requires org.junit.platform.launcher;
+@Export
+@Version("1.0.0")
+package com.io7m.darco.templating;
 
-  requires com.io7m.darco.api;
-  requires com.io7m.darco.examples;
-  requires com.io7m.darco.postgres;
-  requires com.io7m.darco.sqlite;
-
-  requires com.io7m.ervilla.api;
-  requires com.io7m.ervilla.native_exec;
-  requires com.io7m.ervilla.postgres;
-  requires com.io7m.ervilla.test_extension;
-  requires com.io7m.zelador.test_extension;
-  requires org.slf4j;
-  requires io.opentelemetry.api;
-  requires java.sql;
-  requires com.io7m.jmulticlose.core;
-
-  exports com.io7m.darco.tests;
-}
+import org.osgi.annotation.bundle.Export;
+import org.osgi.annotation.versioning.Version;

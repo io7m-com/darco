@@ -1,0 +1,23 @@
+[#ftl output_format="plainText"]
+${copyrightText}
+
+package ${packageName};
+
+import com.io7m.darco.api.DDatabaseQueryAbstract;
+
+/**
+ * An abstract query for the database.
+ *
+ * @param <P> The query parameters
+ * @param <R> The query results
+ */
+
+public abstract class ${queryAbstract}<P, R>
+  extends DDatabaseQueryAbstract<${transactionType}, P, R>
+{
+  protected ${queryAbstract}(
+    final ${transactionType} t)
+  {
+    super(t);
+  }
+}

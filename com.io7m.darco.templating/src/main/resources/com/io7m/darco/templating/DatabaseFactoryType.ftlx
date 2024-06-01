@@ -1,0 +1,21 @@
+[#ftl output_format="plainText"]
+${copyrightText}
+
+package ${packageName};
+
+import com.io7m.darco.api.DDatabaseFactoryType;
+
+/**
+ * The type of database factories.
+ */
+
+public interface ${databaseFactoryType}
+  extends DDatabaseFactoryType<
+  ${configurationType},
+  ${connectionType},
+  ${transactionType},
+  ${queryProviderType}<?, ?, ?>,
+  ${databaseType}>
+{
+
+}

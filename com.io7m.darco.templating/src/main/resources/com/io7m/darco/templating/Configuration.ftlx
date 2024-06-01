@@ -1,0 +1,14 @@
+[#ftl output_format="plainText"]
+${copyrightText}
+
+package ${packageName};
+
+/**
+ * Configuration parameters for the database.
+ */
+
+public record ${configuration}()
+  implements ${configurationType}
+{
+
+}

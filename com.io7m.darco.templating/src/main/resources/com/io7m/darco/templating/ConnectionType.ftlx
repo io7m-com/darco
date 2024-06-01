@@ -1,0 +1,16 @@
+[#ftl output_format="plainText"]
+${copyrightText}
+
+package ${packageName};
+
+import com.io7m.darco.api.DDatabaseConnectionType;
+
+/**
+ * The type of database connections.
+ */
+
+public interface ${connectionType}
+  extends DDatabaseConnectionType<${transactionType}>
+{
+
+}
