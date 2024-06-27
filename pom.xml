@@ -43,7 +43,7 @@
     <!-- Third-party dependencies. -->
     <io.opentelemetry.version>1.39.0</io.opentelemetry.version>
     <jqwik.version>1.8.5</jqwik.version>
-    <org.junit.version>5.10.2</org.junit.version>
+    <org.junit.version>5.10.3</org.junit.version>
     <containers.postgresql.version>16.3</containers.postgresql.version>
   </properties>
 
