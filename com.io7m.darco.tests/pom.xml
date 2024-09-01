@@ -21,6 +21,7 @@
   <properties>
     <checkstyle.skip>true</checkstyle.skip>
     <mdep.analyze.skip>true</mdep.analyze.skip>
+    <enforcer.skip>true</enforcer.skip>
   </properties>
 
   <dependencies>

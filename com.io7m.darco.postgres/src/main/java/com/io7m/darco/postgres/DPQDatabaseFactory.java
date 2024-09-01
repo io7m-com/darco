@@ -435,24 +435,23 @@ public abstract class DPQDatabaseFactory<
     final Consumer<String> startupMessages,
     final TrEventType event)
   {
-    switch (event) {
-      case final TrEventExecutingSQL sql -> {
-        this.publishEvent(
-          startupMessages,
-          String.format("Executing SQL: %s", sql.statement())
-        );
-        return;
-      }
-      case final TrEventUpgrading upgrading -> {
-        this.publishEvent(
-          startupMessages,
-          String.format(
-            "Upgrading database from version %s -> %s",
-            upgrading.fromVersion(),
-            upgrading.toVersion())
-        );
-        return;
-      }
+    if (event instanceof final TrEventExecutingSQL sql) {
+      this.publishEvent(
+        startupMessages,
+        String.format("Executing SQL: %s", sql.statement())
+      );
+      return;
+    }
+
+    if (event instanceof final TrEventUpgrading upgrading) {
+      this.publishEvent(
+        startupMessages,
+        String.format(
+          "Upgrading database from version %s -> %s",
+          upgrading.fromVersion(),
+          upgrading.toVersion())
+      );
+      return;
     }
   }
 }
