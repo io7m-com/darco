@@ -122,32 +122,28 @@ public final class DDatabaseException extends Exception
   public static DDatabaseException ofException(
     final Throwable ex)
   {
-    return switch (ex) {
-      case final DDatabaseException e -> {
-        yield e;
-      }
+    if (ex instanceof DDatabaseException e) {
+      return e;
+    }
 
-      case final SStructuredErrorExceptionType<?> e -> {
-        yield new DDatabaseException(
-          e.getMessage(),
-          ex,
-          e.errorCode().toString(),
-          e.attributes(),
-          e.remediatingAction()
-        );
-      }
+    if (ex instanceof SStructuredErrorExceptionType<?> e) {
+      return new DDatabaseException(
+        e.getMessage(),
+        ex,
+        e.errorCode().toString(),
+        e.attributes(),
+        e.remediatingAction()
+      );
+    }
 
-      default -> {
-        yield new DDatabaseException(
-          Objects.requireNonNullElse(
-            ex.getMessage(),
-            ex.getClass().getSimpleName()),
-          ex,
-          "error-io",
-          Map.of(),
-          Optional.empty()
-        );
-      }
-    };
+    return new DDatabaseException(
+      Objects.requireNonNullElse(
+        ex.getMessage(),
+        ex.getClass().getSimpleName()),
+      ex,
+      "error-io",
+      Map.of(),
+      Optional.empty()
+    );
   }
 }

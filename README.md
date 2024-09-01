@@ -4,7 +4,7 @@ darco
 [![Maven Central](https://img.shields.io/maven-central/v/com.io7m.darco/com.io7m.darco.svg?style=flat-square)](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.io7m.darco%22)
 [![Maven Central (snapshot)](https://img.shields.io/nexus/s/com.io7m.darco/com.io7m.darco?server=https%3A%2F%2Fs01.oss.sonatype.org&style=flat-square)](https://s01.oss.sonatype.org/content/repositories/snapshots/com/io7m/darco/)
 [![Codecov](https://img.shields.io/codecov/c/github/io7m-com/darco.svg?style=flat-square)](https://codecov.io/gh/io7m-com/darco)
-![Java Version](https://img.shields.io/badge/21-java?label=java&color=e6c35c)
+![Java Version](https://img.shields.io/badge/17-java?label=java&color=e65cc3)
 
 ![com.io7m.darco](./src/site/resources/darco.jpg?raw=true)
 
@@ -27,7 +27,7 @@ The `darco` package provides a minimalist, opinionated API for database access.
   * Instrumented with [OpenTelemetry](https://www.opentelemetry.io).
   * [PostgreSQL](https://www.postgresql.org) support.
   * [SQLite](https://www.sqlite.org) support.
-  * Written in pure Java 21.
+  * Written in pure Java 17.
   * [OSGi](https://www.osgi.org/) ready
   * [JPMS](https://en.wikipedia.org/wiki/Java_Platform_Module_System) ready
   * ISC license

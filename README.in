@@ -11,7 +11,7 @@ The `darco` package provides a minimalist, opinionated API for database access.
   * Instrumented with [OpenTelemetry](https://www.opentelemetry.io).
   * [PostgreSQL](https://www.postgresql.org) support.
   * [SQLite](https://www.sqlite.org) support.
-  * Written in pure Java 21.
+  * Written in pure Java 17.
   * [OSGi](https://www.osgi.org/) ready
   * [JPMS](https://en.wikipedia.org/wiki/Java_Platform_Module_System) ready
   * ISC license
