@@ -26,6 +26,7 @@ import com.io7m.darco.api.DDatabaseTransactionType;
 import com.io7m.darco.api.DDatabaseType;
 import com.io7m.jmulticlose.core.CloseableCollection;
 import com.io7m.jmulticlose.core.CloseableCollectionType;
+import com.io7m.jxe.core.JXEHardenedSAXParsers;
 import com.io7m.lanark.core.RDottedName;
 import com.io7m.trasco.api.TrArguments;
 import com.io7m.trasco.api.TrEventExecutingSQL;
@@ -295,7 +296,17 @@ public abstract class DSDatabaseFactory<
       final var parsers = new TrSchemaRevisionSetParsers();
       final TrSchemaRevisionSet revisions;
       try (var stream = this.onRequireDatabaseSchemaXML()) {
-        revisions = parsers.parse(URI.create("urn:source"), stream);
+        final var parser =
+          parsers.createParserWithContext(
+            configuration.saxParsers()
+              .orElseGet(JXEHardenedSAXParsers::new),
+            URI.create("urn:source"),
+            stream,
+            parseStatus -> {
+
+            }
+          );
+        revisions = parser.execute();
       }
 
       final var arguments =

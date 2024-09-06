@@ -28,7 +28,9 @@ module com.io7m.darco.postgres
   requires java.sql;
   requires java.naming;
 
+  requires com.io7m.anethum.api;
   requires com.io7m.jmulticlose.core;
+  requires com.io7m.jxe.core;
   requires com.io7m.lanark.core;
   requires com.io7m.trasco.api;
   requires com.io7m.trasco.vanilla;

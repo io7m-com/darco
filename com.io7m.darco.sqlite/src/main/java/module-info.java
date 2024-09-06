@@ -27,14 +27,16 @@ module com.io7m.darco.sqlite
 
   requires java.sql;
 
+  requires com.io7m.anethum.api;
+  requires com.io7m.jmulticlose.core;
+  requires com.io7m.jxe.core;
+  requires com.io7m.lanark.core;
   requires com.io7m.trasco.api;
   requires com.io7m.trasco.vanilla;
-  requires com.io7m.lanark.core;
-  requires org.slf4j;
-  requires org.xerial.sqlitejdbc;
   requires io.opentelemetry.api;
   requires io.opentelemetry.context;
-  requires com.io7m.jmulticlose.core;
+  requires org.slf4j;
+  requires org.xerial.sqlitejdbc;
 
   exports com.io7m.darco.sqlite;
 }

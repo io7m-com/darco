@@ -41,6 +41,7 @@ module com.io7m.darco.examples
   requires io.opentelemetry.api;
   requires org.slf4j;
   requires org.xerial.sqlitejdbc;
+  requires com.io7m.jxe.core;
 
   uses ESDatabaseQueryProviderType;
   uses EPQDatabaseQueryProviderType;
