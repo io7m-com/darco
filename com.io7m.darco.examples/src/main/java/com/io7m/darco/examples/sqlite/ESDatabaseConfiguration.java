@@ -21,20 +21,24 @@ import com.io7m.darco.api.DDatabaseCreate;
 import com.io7m.darco.api.DDatabaseTelemetryType;
 import com.io7m.darco.api.DDatabaseUpgrade;
 import com.io7m.darco.sqlite.DSDatabaseConfigurationType;
+import com.io7m.jxe.core.JXEHardenedSAXParsers;
 
 import java.nio.file.Path;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * The configuration information for the example SQLite database.
  *
- * @param telemetry The telemetry interface
- * @param create    The database creation option
- * @param upgrade   The database upgrade option
- * @param file      The database file
+ * @param saxParsers The SAX parsers
+ * @param telemetry  The telemetry interface
+ * @param create     The database creation option
+ * @param upgrade    The database upgrade option
+ * @param file       The database file
  */
 
 public record ESDatabaseConfiguration(
+  Optional<JXEHardenedSAXParsers> saxParsers,
   DDatabaseTelemetryType telemetry,
   DDatabaseCreate create,
   DDatabaseUpgrade upgrade,
@@ -44,14 +48,16 @@ public record ESDatabaseConfiguration(
   /**
    * The configuration information for the example SQLite database.
    *
-   * @param telemetry The telemetry interface
-   * @param create    The database creation option
-   * @param upgrade   The database upgrade option
-   * @param file      The database file
+   * @param saxParsers The SAX parsers
+   * @param telemetry  The telemetry interface
+   * @param create     The database creation option
+   * @param upgrade    The database upgrade option
+   * @param file       The database file
    */
 
   public ESDatabaseConfiguration
   {
+    Objects.requireNonNull(saxParsers, "saxParsers");
     Objects.requireNonNull(telemetry, "telemetry");
     Objects.requireNonNull(create, "create");
     Objects.requireNonNull(upgrade, "upgrade");

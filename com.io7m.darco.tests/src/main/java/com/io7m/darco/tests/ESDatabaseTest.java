@@ -32,6 +32,7 @@ import org.junit.jupiter.api.io.TempDir;
 
 import java.nio.file.Path;
 import java.time.Clock;
+import java.util.Optional;
 
 import static com.io7m.darco.api.DDatabaseUnit.UNIT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,6 +55,7 @@ public final class ESDatabaseTest
     this.database =
       this.databases.open(
         new ESDatabaseConfiguration(
+          Optional.empty(),
           DDatabaseTelemetryNoOp.get(),
           DDatabaseCreate.CREATE_DATABASE,
           DDatabaseUpgrade.UPGRADE_DATABASE,

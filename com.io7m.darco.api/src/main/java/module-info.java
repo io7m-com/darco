@@ -24,6 +24,7 @@ module com.io7m.darco.api
   requires static org.osgi.annotation.versioning;
 
   requires com.io7m.jmulticlose.core;
+  requires com.io7m.jxe.core;
   requires com.io7m.lanark.core;
   requires com.io7m.seltzer.api;
   requires io.opentelemetry.api;

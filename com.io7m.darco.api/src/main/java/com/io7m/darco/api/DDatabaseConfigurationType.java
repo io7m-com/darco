@@ -16,12 +16,22 @@
 
 package com.io7m.darco.api;
 
+import com.io7m.jxe.core.JXEHardenedSAXParsers;
+
+import java.util.Optional;
+
 /**
  * The base database configuration.
  */
 
 public interface DDatabaseConfigurationType
 {
+  /**
+   * @return A factory of SAX parsers used to parse database schemas
+   */
+
+  Optional<JXEHardenedSAXParsers> saxParsers();
+
   /**
    * @return The database telemetry interface
    */
