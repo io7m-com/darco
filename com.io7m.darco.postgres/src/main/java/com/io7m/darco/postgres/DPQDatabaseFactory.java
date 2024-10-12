@@ -198,17 +198,34 @@ public abstract class DPQDatabaseFactory<
       try (var statement =
              connection.prepareStatement(statementText)) {
         statement.setString(1, applicationId.value());
-        statement.setLong(2, version.longValueExact());
+        statement.setLong(2, checkLong(version));
         statement.execute();
       }
     } else {
       statementText = "update schema_version set version_number = ?";
       try (var statement =
              connection.prepareStatement(statementText)) {
-        statement.setLong(1, version.longValueExact());
+        statement.setLong(1, checkLong(version));
         statement.execute();
       }
     }
+  }
+
+  private static long checkLong(
+    final BigInteger version)
+  {
+    final var tooSmall =
+      version.compareTo(BigInteger.ZERO) < 0;
+    final var tooLarge =
+      version.compareTo(new BigInteger("18446744073709551615")) > 0;
+
+    if (tooSmall || tooLarge) {
+      throw new IllegalArgumentException(
+        "Version %s must be in the range [0, 18446744073709551615]"
+          .formatted(version)
+      );
+    }
+    return version.longValue();
   }
 
   private Optional<BigInteger> schemaVersionGet(
