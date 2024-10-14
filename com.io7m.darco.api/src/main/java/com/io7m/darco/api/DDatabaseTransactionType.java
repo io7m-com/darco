@@ -30,6 +30,17 @@ public interface DDatabaseTransactionType
   extends AutoCloseable
 {
   /**
+   * Register a closeable resource that will be closed when this transaction
+   * is closed.
+   * @param resource The resource
+   * @return The resource
+   * @param <R> The precise type of resource
+   */
+
+  <R extends AutoCloseable>
+  R registerResource(R resource);
+
+  /**
    * @return The underlying database connection
    */
 

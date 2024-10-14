@@ -38,9 +38,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.io7m.darco.api.DDatabaseUnit.UNIT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith({ErvillaExtension.class, ZeladorExtension.class})
 @ErvillaConfiguration(projectName = "com.io7m.darco", disabledIfUnsupported = true)
@@ -103,5 +105,47 @@ public final class EPQDatabaseTest
         assertEquals("Word0", qg.execute(UNIT).orElseThrow());
       }
     }
+  }
+
+  @Test
+  public void testCloseConnection()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      c.registerResource(() -> {
+        closed.set(true);
+      });
+    }
+    assertTrue(closed.get());
+  }
+
+  @Test
+  public void testCloseTransaction()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      try (var t = c.openTransaction()) {
+        t.registerResource(() -> {
+          closed.set(true);
+        });
+      }
+    }
+    assertTrue(closed.get());
+  }
+
+  @Test
+  public void testCloseTransactionImplicit()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      final var t = c.openTransaction();
+      t.registerResource(() -> {
+        closed.set(true);
+      });
+    }
+    assertTrue(closed.get());
   }
 }

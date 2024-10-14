@@ -30,6 +30,19 @@ import static com.io7m.darco.api.DDatabaseTransactionCloseBehavior.ON_CLOSE_DO_N
 public interface DDatabaseConnectionType<T extends DDatabaseTransactionType>
   extends AutoCloseable
 {
+  /**
+   * Register a closeable resource that will be closed when this connection
+   * is closed.
+   *
+   * @param resource The resource
+   * @param <R>      The precise type of resource
+   *
+   * @return The resource
+   */
+
+  <R extends AutoCloseable>
+  R registerResource(R resource);
+
   @Override
   void close()
     throws DDatabaseException;
@@ -41,7 +54,8 @@ public interface DDatabaseConnectionType<T extends DDatabaseTransactionType>
   Connection connection();
 
   /**
-   * Begin a new transaction.
+   * Begin a new transaction. The transaction will be registered as a
+   * closeable resource with this connection.
    *
    * @return The transaction
    *
@@ -55,7 +69,8 @@ public interface DDatabaseConnectionType<T extends DDatabaseTransactionType>
   }
 
   /**
-   * Begin a new transaction.
+   * Begin a new transaction. The transaction will be registered as a
+   * closeable resource with this connection.
    *
    * @param closeBehavior The close behavior
    *

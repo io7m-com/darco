@@ -82,8 +82,17 @@ public abstract class DDatabaseTransactionAbstract<
         );
       });
 
-    this.values =
-      new HashMap<>();
+    switch (this.closeBehavior) {
+      case ON_CLOSE_CLOSE_CONNECTION -> {
+        this.resources.add(this.connection);
+      }
+      case ON_CLOSE_DO_NOTHING -> {
+
+      }
+    }
+
+    this.resources.add(this::rollback);
+    this.values = new HashMap<>();
   }
 
   @Override
@@ -92,7 +101,7 @@ public abstract class DDatabaseTransactionAbstract<
     final V value)
   {
     if (value instanceof final AutoCloseable closeable) {
-      this.resources.add(closeable);
+      this.registerResource(closeable);
     }
     this.values.put(clazz, value);
   }
@@ -108,6 +117,15 @@ public abstract class DDatabaseTransactionAbstract<
           "No object registered for class %s".formatted(clazz)
         );
       });
+  }
+
+  @Override
+  public final <R extends AutoCloseable> R registerResource(
+    final R resource)
+  {
+    return this.resources.add(
+      Objects.requireNonNull(resource, "resource")
+    );
   }
 
   @Override
@@ -136,21 +154,12 @@ public abstract class DDatabaseTransactionAbstract<
     throws DDatabaseException
   {
     try {
-      this.rollback();
+      this.resources.close();
     } catch (final Exception e) {
       this.transactionSpan.recordException(e);
       throw e;
     } finally {
       this.transactionSpan.end();
-
-      switch (this.closeBehavior) {
-        case ON_CLOSE_CLOSE_CONNECTION -> {
-          this.connection.close();
-        }
-        case ON_CLOSE_DO_NOTHING -> {
-          // Nothing to do!
-        }
-      }
     }
   }
 

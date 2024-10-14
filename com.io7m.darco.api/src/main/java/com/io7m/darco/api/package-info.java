@@ -19,7 +19,7 @@
  */
 
 @Export
-@Version("2.0.2")
+@Version("3.0.0")
 package com.io7m.darco.api;
 
 import org.osgi.annotation.bundle.Export;
