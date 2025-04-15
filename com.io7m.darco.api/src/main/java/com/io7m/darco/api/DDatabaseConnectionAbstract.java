@@ -17,6 +17,8 @@
 
 package com.io7m.darco.api;
 
+import com.io7m.jmulticlose.core.CloseableCollection;
+import com.io7m.jmulticlose.core.CloseableCollectionType;
 import io.opentelemetry.api.trace.Span;
 import io.opentelemetry.context.Context;
 
@@ -24,6 +26,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * An abstract database connection.
@@ -43,6 +46,14 @@ public abstract class DDatabaseConnectionAbstract<
   private final Span connectionSpan;
   private final C configuration;
   private final Map<Class<?>, Q> queryMap;
+  private final CloseableCollectionType<DDatabaseException> resources;
+
+  @Override
+  public final <R extends AutoCloseable> R registerResource(
+    final R resource)
+  {
+    return this.resources.add(resource);
+  }
 
   protected DDatabaseConnectionAbstract(
     final C inConfiguration,
@@ -58,6 +69,17 @@ public abstract class DDatabaseConnectionAbstract<
       Objects.requireNonNull(inSpan, "span");
     this.queryMap =
       Objects.requireNonNull(inQueryMap, "queries");
+    this.resources =
+      CloseableCollection.create(() -> {
+        return new DDatabaseException(
+          "One or more resources failed to close.",
+          "error-resource",
+          Map.of(),
+          Optional.empty()
+        );
+      });
+
+    this.resources.add(this::closeConnection);
   }
 
   @Override
@@ -69,7 +91,7 @@ public abstract class DDatabaseConnectionAbstract<
   /**
    * Create a new transaction.
    *
-   * @param closeBehavior The close behavior
+   * @param closeBehavior   The close behavior
    * @param transactionSpan The transaction span
    * @param queries         The query provider map
    *
@@ -95,10 +117,12 @@ public abstract class DDatabaseConnectionAbstract<
         .setParent(Context.current().with(this.connectionSpan))
         .startSpan();
 
-    return this.createTransaction(
-      closeBehavior,
-      transactionSpan,
-      this.queryMap
+    return this.resources.add(
+      this.createTransaction(
+        closeBehavior,
+        transactionSpan,
+        this.queryMap
+      )
     );
   }
 
@@ -113,6 +137,12 @@ public abstract class DDatabaseConnectionAbstract<
 
   @Override
   public final void close()
+    throws DDatabaseException
+  {
+    this.resources.close();
+  }
+
+  private void closeConnection()
     throws DDatabaseException
   {
     try {

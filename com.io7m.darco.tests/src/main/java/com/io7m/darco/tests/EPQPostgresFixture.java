@@ -68,7 +68,7 @@ public final class EPQPostgresFixture
       supervisor.start(
         EPgSpecs.builderFromDockerIO(
           EPQTestProperties.POSTGRESQL_VERSION,
-          new EPortAddressType.All(),
+          new EPortAddressType.AllIPv4(),
           port,
           "postgresql",
           "postgresql",

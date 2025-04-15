@@ -11,7 +11,7 @@
         <c:change date="2024-09-06T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.41.0 → 1.42.0."/>
       </c:changes>
     </c:release>
-    <c:release date="2024-10-12T11:25:11+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="2.0.1">
+    <c:release date="2024-10-12T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="2.0.1">
       <c:changes>
         <c:change date="2024-09-10T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.42.0 → 1.42.1."/>
         <c:change date="2024-09-24T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.16.2 → 3.17."/>
@@ -23,6 +23,52 @@
         <c:change date="2024-10-08T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.8 → 1.5.9."/>
         <c:change date="2024-10-11T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.42.1 → 1.43.0."/>
         <c:change date="2024-10-12T00:00:00+00:00" summary="Use more explicit BigInteger checking for schema versions."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2025-04-15T18:08:26+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="3.0.0">
+      <c:changes>
+        <c:change date="2024-10-14T00:00:00+00:00" summary="Add the ability to register closeables on connections and transactions.">
+          <c:tickets>
+            <c:ticket id="33"/>
+          </c:tickets>
+        </c:change>
+        <c:change date="2024-10-14T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.9 → 1.5.10."/>
+        <c:change date="2024-10-15T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.10 → 1.5.11."/>
+        <c:change date="2024-10-21T00:00:00+00:00" summary="Update org.junit:junit-bom:5.11.2 → 5.11.3."/>
+        <c:change date="2024-10-23T00:00:00+00:00" summary="Update org.xerial:sqlite-jdbc:3.46.1.3 → 3.47.0.0."/>
+        <c:change date="2024-10-28T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.11 → 1.5.12."/>
+        <c:change date="2024-11-05T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.17.1 → 3.17.2."/>
+        <c:change date="2024-11-07T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.17.2 → 3.17.3."/>
+        <c:change date="2024-11-11T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.43.0 → 1.44.1."/>
+        <c:change date="2024-11-26T00:00:00+00:00" summary="Update org.xerial:sqlite-jdbc:3.47.0.0 → 3.47.1.0."/>
+        <c:change date="2024-11-29T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.17.3 → 3.17.4."/>
+        <c:change date="2024-12-03T00:00:00+00:00" summary="Update jqwik.version:1.9.1 → 1.9.2."/>
+        <c:change date="2024-12-06T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.17.4 → 3.17.5."/>
+        <c:change date="2024-12-06T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.44.1 → 1.45.0."/>
+        <c:change date="2024-12-16T00:00:00+00:00" summary="Update org.junit:junit-bom:5.11.3 → 5.11.4."/>
+        <c:change date="2024-12-18T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.12 → 1.5.13."/>
+        <c:change date="2024-12-19T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.13 → 1.5.14."/>
+        <c:change date="2024-12-23T00:00:00+00:00" summary="Update org.freemarker:freemarker:2.3.33 → 2.3.34."/>
+        <c:change date="2024-12-23T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.14 → 1.5.15."/>
+        <c:change date="2024-12-24T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.17.5 → 3.18."/>
+        <c:change date="2025-01-03T00:00:00+00:00" summary="Update org.xerial:sqlite-jdbc:3.47.1.0 → 3.47.2.0."/>
+        <c:change date="2025-01-06T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.15 → 1.5.16."/>
+        <c:change date="2025-01-09T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.18 → 3.18.1."/>
+        <c:change date="2025-01-10T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.45.0 → 1.46.0."/>
+        <c:change date="2025-01-14T00:00:00+00:00" summary="Update org.postgresql:postgresql:42.7.4 → 42.7.5."/>
+        <c:change date="2025-01-15T00:00:00+00:00" summary="Update org.xerial:sqlite-jdbc:3.47.2.0 → 3.48.0.0."/>
+        <c:change date="2025-01-24T00:00:00+00:00" summary="Update codecov/codecov-action:5.1.2 → 5.3.1."/>
+        <c:change date="2025-01-30T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.18.1 → 3.18.2."/>
+        <c:change date="2025-03-01T00:00:00+00:00" summary="Update org.xerial:sqlite-jdbc:3.48.0.0 → 3.49.1.0."/>
+        <c:change date="2025-04-01T00:00:00+00:00" summary="Update org.junit:junit-bom:5.11.4 → 5.12.1."/>
+        <c:change date="2025-04-01T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.18.2 → 3.19.2."/>
+        <c:change date="2025-04-01T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.16 → 1.5.18."/>
+        <c:change date="2025-04-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.46.0 → 1.48.0."/>
+        <c:change compatible="false" date="2025-04-15T00:00:00+00:00" summary="Replace role handling.">
+          <c:tickets>
+            <c:ticket id="81"/>
+          </c:tickets>
+        </c:change>
       </c:changes>
     </c:release>
   </c:releases>

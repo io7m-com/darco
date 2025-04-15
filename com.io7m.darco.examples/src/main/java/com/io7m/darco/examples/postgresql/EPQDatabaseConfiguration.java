@@ -20,6 +20,7 @@ package com.io7m.darco.examples.postgresql;
 import com.io7m.darco.api.DDatabaseCreate;
 import com.io7m.darco.api.DDatabaseTelemetryType;
 import com.io7m.darco.api.DDatabaseUpgrade;
+import com.io7m.darco.api.DRoles;
 import com.io7m.darco.api.DUsernamePassword;
 import com.io7m.darco.postgres.DPQDatabaseConfigurationType;
 import com.io7m.jxe.core.JXEHardenedSAXParsers;
@@ -40,6 +41,7 @@ import java.util.Optional;
  * @param databaseUseTLS  Whether to use TLS to connect to the database
  * @param ownerRole       The database owner role
  * @param workerRole      The database worker role
+ * @param roles           The roles
  */
 
 public record EPQDatabaseConfiguration(
@@ -52,7 +54,8 @@ public record EPQDatabaseConfiguration(
   String databaseName,
   boolean databaseUseTLS,
   DUsernamePassword ownerRole,
-  DUsernamePassword workerRole)
+  DUsernamePassword workerRole,
+  DRoles roles)
   implements DPQDatabaseConfigurationType
 {
   /**
@@ -68,6 +71,7 @@ public record EPQDatabaseConfiguration(
    * @param databaseUseTLS  Whether to use TLS to connect to the database
    * @param ownerRole       The database owner role
    * @param workerRole      The database worker role
+   * @param roles           The roles
    */
 
   public EPQDatabaseConfiguration
@@ -80,5 +84,9 @@ public record EPQDatabaseConfiguration(
     Objects.requireNonNull(databaseName, "databaseName");
     Objects.requireNonNull(ownerRole, "ownerRole");
     Objects.requireNonNull(workerRole, "workerRole");
+    Objects.requireNonNull(roles, "roles");
+
+    roles.get(ownerRole.userName());
+    roles.get(workerRole.userName());
   }
 }

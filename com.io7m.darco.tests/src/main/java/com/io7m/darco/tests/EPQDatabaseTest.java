@@ -21,6 +21,7 @@ import com.io7m.darco.api.DDatabaseCreate;
 import com.io7m.darco.api.DDatabaseException;
 import com.io7m.darco.api.DDatabaseTelemetryNoOp;
 import com.io7m.darco.api.DDatabaseUpgrade;
+import com.io7m.darco.api.DRoles;
 import com.io7m.darco.api.DUsernamePassword;
 import com.io7m.darco.examples.postgresql.EPQDatabaseConfiguration;
 import com.io7m.darco.examples.postgresql.EPQDatabaseFactory;
@@ -37,10 +38,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.io7m.darco.api.DDatabaseUnit.UNIT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith({ErvillaExtension.class, ZeladorExtension.class})
 @ErvillaConfiguration(projectName = "com.io7m.darco", disabledIfUnsupported = true)
@@ -67,6 +71,12 @@ public final class EPQDatabaseTest
 
     this.databases =
       new EPQDatabaseFactory();
+
+    final var owner =
+      new DUsernamePassword("postgresql", "12345678");
+    final var worker =
+      new DUsernamePassword("postgresql", "12345678");
+
     this.database =
       this.databases.open(
         new EPQDatabaseConfiguration(
@@ -78,8 +88,13 @@ public final class EPQDatabaseTest
           POSTGRES_FIXTURE.port(),
           "postgresql",
           false,
-          new DUsernamePassword("postgresql", "12345678"),
-          new DUsernamePassword("postgresql", "12345678")
+          owner,
+          worker,
+          new DRoles(
+            Map.ofEntries(
+              Map.entry(owner.userName(), owner)
+            )
+          )
         ),
         event -> {
 
@@ -103,5 +118,47 @@ public final class EPQDatabaseTest
         assertEquals("Word0", qg.execute(UNIT).orElseThrow());
       }
     }
+  }
+
+  @Test
+  public void testCloseConnection()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      c.registerResource(() -> {
+        closed.set(true);
+      });
+    }
+    assertTrue(closed.get());
+  }
+
+  @Test
+  public void testCloseTransaction()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      try (var t = c.openTransaction()) {
+        t.registerResource(() -> {
+          closed.set(true);
+        });
+      }
+    }
+    assertTrue(closed.get());
+  }
+
+  @Test
+  public void testCloseTransactionImplicit()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      final var t = c.openTransaction();
+      t.registerResource(() -> {
+        closed.set(true);
+      });
+    }
+    assertTrue(closed.get());
   }
 }

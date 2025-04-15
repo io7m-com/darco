@@ -31,11 +31,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
 import java.nio.file.Path;
-import java.time.Clock;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.io7m.darco.api.DDatabaseUnit.UNIT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public final class ESDatabaseTest
 {
@@ -83,5 +84,47 @@ public final class ESDatabaseTest
         assertEquals("Word0", qg.execute(UNIT).orElseThrow());
       }
     }
+  }
+
+  @Test
+  public void testCloseConnection()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      c.registerResource(() -> {
+        closed.set(true);
+      });
+    }
+    assertTrue(closed.get());
+  }
+
+  @Test
+  public void testCloseTransaction()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      try (var t = c.openTransaction()) {
+        t.registerResource(() -> {
+          closed.set(true);
+        });
+      }
+    }
+    assertTrue(closed.get());
+  }
+
+  @Test
+  public void testCloseTransactionImplicit()
+    throws DDatabaseException
+  {
+    final var closed = new AtomicBoolean(false);
+    try (var c = this.database.openConnection()) {
+      final var t = c.openTransaction();
+      t.registerResource(() -> {
+        closed.set(true);
+      });
+    }
+    assertTrue(closed.get());
   }
 }
