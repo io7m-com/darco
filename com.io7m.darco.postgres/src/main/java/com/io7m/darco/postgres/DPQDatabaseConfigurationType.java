@@ -57,6 +57,12 @@ public interface DPQDatabaseConfigurationType
 
   DUsernamePassword ownerRole();
 
+  @Override
+  default DUsernamePassword defaultRole()
+  {
+    return this.workerRole();
+  }
+
   /**
    * @return The database worker role
    */

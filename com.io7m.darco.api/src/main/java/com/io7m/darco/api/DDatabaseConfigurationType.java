@@ -49,4 +49,16 @@ public interface DDatabaseConfigurationType
    */
 
   DDatabaseUpgrade upgrade();
+
+  /**
+   * @return The default role for connections if one is not otherwise provided
+   */
+
+  DUsernamePassword defaultRole();
+
+  /**
+   * @return The set of roles associated with the application
+   */
+
+  DRoles roles();
 }

@@ -25,11 +25,16 @@
         <c:change date="2024-10-12T00:00:00+00:00" summary="Use more explicit BigInteger checking for schema versions."/>
       </c:changes>
     </c:release>
-    <c:release date="2024-10-14T21:32:14+00:00" is-open="true" ticket-system="com.github.io7m.darco" version="3.0.0">
+    <c:release date="2025-04-15T12:02:06+00:00" is-open="true" ticket-system="com.github.io7m.darco" version="3.0.0">
       <c:changes>
-        <c:change date="2024-10-14T21:32:14+00:00" summary="Add the ability to register closeables on connections and transactions.">
+        <c:change date="2024-10-14T00:00:00+00:00" summary="Add the ability to register closeables on connections and transactions.">
           <c:tickets>
             <c:ticket id="33"/>
+          </c:tickets>
+        </c:change>
+        <c:change compatible="false" date="2025-04-15T12:02:06+00:00" summary="Replace role handling.">
+          <c:tickets>
+            <c:ticket id="81"/>
           </c:tickets>
         </c:change>
       </c:changes>

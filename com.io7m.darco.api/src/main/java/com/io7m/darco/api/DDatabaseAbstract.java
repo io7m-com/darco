@@ -110,7 +110,36 @@ public abstract class DDatabaseAbstract<
     throws DDatabaseException
   {
     Objects.requireNonNull(role, "role");
-    return this.openConnection();
+
+    final var userPass =
+      this.configuration.roles()
+        .get(role);
+
+    final var tracer =
+      this.configuration.telemetry()
+        .tracer();
+
+    final var span =
+      tracer.spanBuilder("DatabaseConnection")
+        .setAttribute("db.system", DDatabaseKinds.sqlite().value())
+        .startSpan();
+
+    try {
+      span.addEvent("RequestConnection");
+      final var conn =
+        this.dataSource.getConnection(
+          userPass.userName(),
+          userPass.password()
+        );
+      span.addEvent("ObtainedConnection");
+
+      conn.setAutoCommit(false);
+      return this.createConnection(span, conn, this.queryProviders);
+    } catch (final SQLException e) {
+      span.recordException(e);
+      span.end();
+      throw DDatabaseException.ofException(e);
+    }
   }
 
   @Override
@@ -123,8 +152,8 @@ public abstract class DDatabaseAbstract<
   public final T openTransaction()
     throws DDatabaseException
   {
-    final var connection = this.openConnection();
-    return connection.openTransaction(ON_CLOSE_CLOSE_CONNECTION);
+    return this.openConnection()
+      .openTransaction(ON_CLOSE_CLOSE_CONNECTION);
   }
 
   @Override
@@ -134,8 +163,8 @@ public abstract class DDatabaseAbstract<
   {
     Objects.requireNonNull(role, "role");
 
-    final var connection = this.openConnectionWithRole(role);
-    return connection.openTransaction(ON_CLOSE_CLOSE_CONNECTION);
+    return this.openConnectionWithRole(role)
+      .openTransaction(ON_CLOSE_CLOSE_CONNECTION);
   }
 
   /**
@@ -158,27 +187,9 @@ public abstract class DDatabaseAbstract<
   public final N openConnection()
     throws DDatabaseException
   {
-    final var tracer =
-      this.configuration.telemetry()
-        .tracer();
-
-    final var span =
-      tracer.spanBuilder("DatabaseConnection")
-        .setAttribute("db.system", DDatabaseKinds.sqlite().value())
-        .startSpan();
-
-    try {
-      span.addEvent("RequestConnection");
-      final var conn = this.dataSource.getConnection();
-      span.addEvent("ObtainedConnection");
-
-      conn.setAutoCommit(false);
-      return this.createConnection(span, conn, this.queryProviders);
-    } catch (final SQLException e) {
-      span.recordException(e);
-      span.end();
-      throw DDatabaseException.ofException(e);
-    }
+    return this.openConnectionWithRole(
+      this.configuration.defaultRole().userName()
+    );
   }
 
   @Override

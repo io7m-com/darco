@@ -20,10 +20,13 @@ package com.io7m.darco.examples.sqlite;
 import com.io7m.darco.api.DDatabaseCreate;
 import com.io7m.darco.api.DDatabaseTelemetryType;
 import com.io7m.darco.api.DDatabaseUpgrade;
+import com.io7m.darco.api.DRoles;
+import com.io7m.darco.api.DUsernamePassword;
 import com.io7m.darco.sqlite.DSDatabaseConfigurationType;
 import com.io7m.jxe.core.JXEHardenedSAXParsers;
 
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -62,5 +65,17 @@ public record ESDatabaseConfiguration(
     Objects.requireNonNull(create, "create");
     Objects.requireNonNull(upgrade, "upgrade");
     Objects.requireNonNull(file, "file");
+  }
+
+  @Override
+  public DUsernamePassword defaultRole()
+  {
+    return new DUsernamePassword("unused", "unused");
+  }
+
+  @Override
+  public DRoles roles()
+  {
+    return DRoles.of(List.of(this.defaultRole()));
   }
 }

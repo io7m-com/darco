@@ -49,6 +49,10 @@ the `darco` package attempts to provide a common set of interfaces and abstract
 classes to minimize the amount of essentially duplicated code between projects
 that talk to databases.
 
+You probably don't want to use this package for your own applications. It is
+intended to be used to keep `io7m` packages consistent internally and to reduce
+boilerplate.
+
 ### Building
 
 ```
