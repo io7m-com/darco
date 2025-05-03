@@ -25,7 +25,7 @@
         <c:change date="2024-10-12T00:00:00+00:00" summary="Use more explicit BigInteger checking for schema versions."/>
       </c:changes>
     </c:release>
-    <c:release date="2025-04-15T18:08:26+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="3.0.0">
+    <c:release date="2025-04-15T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="3.0.0">
       <c:changes>
         <c:change date="2024-10-14T00:00:00+00:00" summary="Add the ability to register closeables on connections and transactions.">
           <c:tickets>
@@ -69,6 +69,15 @@
             <c:ticket id="81"/>
           </c:tickets>
         </c:change>
+      </c:changes>
+    </c:release>
+    <c:release date="2025-05-03T16:47:21+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="3.1.0">
+      <c:changes>
+        <c:change date="2025-05-01T00:00:00+00:00" summary="Update org.slf4j:slf4j-api:2.0.16 → 2.0.17."/>
+        <c:change date="2025-05-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.48.0 → 1.49.0."/>
+        <c:change date="2025-05-01T00:00:00+00:00" summary="Update org.junit:junit-bom:5.12.1 → 5.12.2."/>
+        <c:change date="2025-05-01T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.19.2 → 3.19.4."/>
+        <c:change date="2025-05-03T00:00:00+00:00" summary="Publish a com.io7m.darco.bom module."/>
       </c:changes>
     </c:release>
   </c:releases>
