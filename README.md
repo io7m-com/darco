@@ -16,7 +16,7 @@ darco
 | OpenJDK (Temurin) LTS | Windows | [![Build (OpenJDK (Temurin) LTS, Windows)](https://img.shields.io/github/actions/workflow/status/io7m-com/darco/main.windows.temurin.lts.yml)](https://www.github.com/io7m-com/darco/actions?query=workflow%3Amain.windows.temurin.lts)|
 
 
-# darco
+## darco
 
 The `darco` package provides a minimalist, opinionated API for database access.
 
