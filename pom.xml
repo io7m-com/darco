@@ -12,7 +12,7 @@
 
   <groupId>com.io7m.darco</groupId>
   <artifactId>com.io7m.darco</artifactId>
-  <version>3.2.0</version>
+  <version>3.3.0-SNAPSHOT</version>
 
   <packaging>pom</packaging>
   <name>com.io7m.darco</name>
@@ -33,7 +33,7 @@
     <io7m.workID>2db624bf-3cc5-4737-8d6b-b32bdae50b8c</io7m.workID>
 
     <!-- Configuration -->
-    <io7m.api.previousVersion>3.1.0</io7m.api.previousVersion>
+    <io7m.api.previousVersion>3.2.0</io7m.api.previousVersion>
     <io7m.java.targetJavaVersion>17</io7m.java.targetJavaVersion>
 
     <!-- io7m dependencies. -->
