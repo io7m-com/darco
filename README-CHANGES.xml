@@ -71,13 +71,39 @@
         </c:change>
       </c:changes>
     </c:release>
-    <c:release date="2025-05-03T16:47:21+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="3.1.0">
+    <c:release date="2025-05-03T00:00:00+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="3.1.0">
       <c:changes>
         <c:change date="2025-05-01T00:00:00+00:00" summary="Update org.slf4j:slf4j-api:2.0.16 → 2.0.17."/>
         <c:change date="2025-05-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.48.0 → 1.49.0."/>
         <c:change date="2025-05-01T00:00:00+00:00" summary="Update org.junit:junit-bom:5.12.1 → 5.12.2."/>
         <c:change date="2025-05-01T00:00:00+00:00" summary="Update nl.jqno.equalsverifier:equalsverifier:3.19.2 → 3.19.4."/>
         <c:change date="2025-05-03T00:00:00+00:00" summary="Publish a com.io7m.darco.bom module."/>
+      </c:changes>
+    </c:release>
+    <c:release date="2025-12-22T13:17:03+00:00" is-open="false" ticket-system="com.github.io7m.darco" version="3.2.0">
+      <c:changes>
+        <c:change date="2025-06-01T00:00:00+00:00" summary="Update com.io7m.seltzer:com.io7m.seltzer.api:1.1.0 → 1.2.0."/>
+        <c:change date="2025-06-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.49.0 → 1.50.0."/>
+        <c:change date="2025-06-01T00:00:00+00:00" summary="Update org.junit:junit-bom:5.12.2 → 5.13.0."/>
+        <c:change date="2025-06-01T00:00:00+00:00" summary="Update org.postgresql:postgresql:42.7.5 → 42.7.6."/>
+        <c:change date="2025-07-01T00:00:00+00:00" summary="Update org.postgresql:postgresql:42.7.6 → 42.7.7."/>
+        <c:change date="2025-08-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.50.0 → 1.52.0."/>
+        <c:change date="2025-08-01T00:00:00+00:00" summary="Update org.xerial:sqlite-jdbc:3.49.1.0 → 3.50.3.0."/>
+        <c:change date="2025-08-01T00:00:00+00:00" summary="Update org.junit:junit-bom:5.13.0 → 5.13.4."/>
+        <c:change date="2025-08-24T00:00:00+00:00" summary="Update jqwik.version:1.9.2 → 1.9.3."/>
+        <c:change date="2025-09-02T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.52.0 → 1.53.0."/>
+        <c:change date="2025-10-01T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.18 → 1.5.19."/>
+        <c:change date="2025-10-01T00:00:00+00:00" summary="Update org.postgresql:postgresql:42.7.7 → 42.7.8."/>
+        <c:change date="2025-10-01T00:00:00+00:00" summary="Update org.junit:junit-bom:5.13.4 → 5.14.0."/>
+        <c:change date="2025-10-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.53.0 → 1.54.1."/>
+        <c:change date="2025-11-01T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.19 → 1.5.20."/>
+        <c:change date="2025-11-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.54.1 → 1.55.0."/>
+        <c:change date="2025-11-01T00:00:00+00:00" summary="Update org.junit:junit-bom:5.14.0 → 5.14.1."/>
+        <c:change date="2025-11-01T00:00:00+00:00" summary="Update actions/upload-artifact:4.6.2 → 5.0.0."/>
+        <c:change date="2025-12-01T00:00:00+00:00" summary="Update org.xerial:sqlite-jdbc:3.50.3.0 → 3.51.0.0."/>
+        <c:change date="2025-12-01T00:00:00+00:00" summary="Update ch.qos.logback:logback-classic:1.5.20 → 1.5.21."/>
+        <c:change date="2025-12-01T00:00:00+00:00" summary="Update io.opentelemetry:opentelemetry-bom:1.55.0 → 1.56.0."/>
+        <c:change date="2025-12-22T00:00:00+00:00" summary="Update org.xerial:sqlite-jdbc:3.51.0.0 → 3.51.1.0."/>
       </c:changes>
     </c:release>
   </c:releases>
